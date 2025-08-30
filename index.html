@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAI SMAN 1 UNGARAN CBT Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --hijau-lumut: #2E8B57;
+            --biru-cerah: #007BFF;
+            --putih: #FFFFFF;
+            --hitam: #000000;
+            --abu-abu: #F5F5F5;
+            --merah: #FF0000;
+            --oranye: #FF8C00;
+            --hijau: #28A745;
+            --biru-soal: #007BFF;
+            --abu-tua: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--hijau-lumut);
+            color: var(--putih);
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-ujian {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .header-ujian .nama-siswa {
+            font-size: 16px;
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: var(--putih);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--abu-tua);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--abu-tua);
+            font-weight: 500;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--abu-tua);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--hijau-lumut);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--biru-cerah);
+            color: var(--putih);
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-orange {
+            background-color: var(--oranye);
+        }
+
+        .btn-orange:hover {
+            background-color: #e67300;
+        }
+
+        .btn-selesai {
+            background-color: var(--hijau);
+        }
+
+        .btn-selesai:hover {
+            background-color: #218838;
+        }
+
+        /* Menu Pilihan Login */
+        .menu-login {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .menu-btn.active {
+            background-color: var(--hijau-lumut);
+            color: white;
+        }
+
+        /* Dashboard Siswa */
+        .dashboard-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-box {
+            background-color: var(--putih);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 15px;
+            color: var(--hijau-lumut);
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Halaman Ujian */
+        .ujian-container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .ujian-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .timer-box {
+            background-color: var(--merah);
+            color: var(--putih);
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .timer-box i {
+            margin-right: 8px;
+        }
+
+        .soal-container {
+            background-color: var(--putih);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .soal-header {
+            margin-bottom: 20px;
+        }
+
+        .soal-number {
+            font-weight: bold;
+            color: var(--hijau-lumut);
+            margin-bottom: 10px;
+        }
+
+        .soal-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .options-container {
+            margin-bottom: 30px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .option-radio.selected {
+            border-color: var(--hijau-lumut);
+        }
+
+        .option-radio.selected::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--hijau-lumut);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Daftar Soal Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .popup-content {
+            background-color: var(--putih);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .soal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 10px;
+        }
+
+        .soal-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .soal-item.current {
+            background-color: var(--biru-soal);
+            color: white;
+        }
+
+        .soal-item.answered {
+            background-color: var(--hijau);
+            color: white;
+        }
+
+        /* Halaman Hasil */
+        .hasil-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+        }
+
+        .hasil-box {
+            background-color: var(--putih);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .hasil-box h2 {
+            margin-bottom: 20px;
+            color: var(--hijau-lumut);
+        }
+
+        .nilai {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .nilai.lulus {
+            color: var(--hijau);
+        }
+
+        .nilai.tidak-lulus {
+            color: var(--merah);
+        }
+
+        .pesan {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .pesan.lulus {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--hijau);
+        }
+
+        .pesan.tidak-lulus {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: var(--merah);
+        }
+
+        /* Halaman Rekap Guru */
+        .rekap-container {
+            padding: 20px;
+        }
+
+        .kelas-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .kelas-tab {
+            padding: 10px 15px;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .kelas-tab.active {
+            background-color: var(--hijau-lumut);
+            color: white;
+        }
+
+        .rekap-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .rekap-table th, .rekap-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .rekap-table th {
+            background-color: var(--hijau-lumut);
+            color: white;
+        }
+
+        .rekap-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .status.tuntas {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--hijau);
+        }
+
+        .status.tidak-tuntas {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: var(--merah);
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 18px;
+            }
+
+            .login-box {
+                padding: 20px;
+            }
+
+            .ujian-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timer-box {
+                margin-top: 10px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .navigation button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header" id="main-header">
+        PAI SMAN 1 UNGARAN CBT Application
+    </div>
+
+    <!-- Halaman Login -->
+    <div id="login-page" class="login-container">
+        <div class="login-box">
+            <div class="menu-login">
+                <button class="menu-btn active" id="siswa-btn">Siswa</button>
+                <button class="menu-btn" id="guru-btn">Guru</button>
+            </div>
+            
+            <h2>Assalamualaikum</h2>
+            
+            <!-- Form Login Siswa -->
+            <form id="login-siswa-form">
+                <div class="form-group">
+                    <label for="nama-siswa">Nama Lengkap</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="nama-siswa" class="form-control" placeholder="Masukkan nama lengkap" required="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="no-absen">Nomor Absen</label>
+                    <div class="input-group">
+                        <i class="fas fa-id-badge"></i>
+                        <select id="no-absen" class="form-control" required="">
+                            <option value="">Pilih Nomor Absen</option>
+                            <script>
+                                for (let i = 1; i <= 36; i++) {
+                                    document.write(`<option value="${i}">${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kelas">Kelas</label>
+                    <div class="input-group">
+                        <i class="fas fa-school"></i>
+                        <select id="kelas" class="form-control" required="">
+                            <option value="">Pilih Kelas</option>
+                            <script>
+                                for (let i = 1; i <= 12; i++) {
+                                    document.write(`<option value="XI-${i}">XI-${i}</option>`);
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <!-- Form Login Guru -->
+            <form id="login-guru-form" class="hidden">
+                <div class="form-group">
+                    <label for="username-guru">Username</label>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username-guru" class="form-control" placeholder="Masukkan username" required="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password-guru">Password</label>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password-guru" class="form-control" placeholder="Masukkan password" required="">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Halaman Dashboard Siswa -->
+    <div id="dashboard-siswa" class="dashboard-container hidden">
+        <div class="info-box">
+            <h3>Informasi Siswa</h3>
+            <div class="info-item">
+                <span>Nama:</span>
+                <span id="info-nama"></span>
+            </div>
+            <div class="info-item">
+                <span>Nomor Absen:</span>
+                <span id="info-absen"></span>
+            </div>
+            <div class="info-item">
+                <span>Kelas:</span>
+                <span id="info-kelas"></span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>Petunjuk Ujian</h3>
+            <p>1. Waktu pengerjaan soal adalah 40 menit</p>
+            <p>2. Soal berjumlah 25 butir pilihan ganda</p>
+            <p>3. Pilih jawaban yang menurut Anda benar</p>
+            <p>4. Setiap soal memiliki bobot nilai 20</p>
+            <p>5. Nilai minimal untuk lulus adalah 80</p>
+            <button id="mulai-ujian" class="btn">Mulai Ujian</button>
+        </div>
+    </div>
+
+    <!-- Halaman Ujian -->
+    <div id="ujian-page" class="ujian-container hidden">
+        <div class="ujian-header">
+            <div class="header-ujian">
+                <div>PAI SMAN 1 UNGARAN CBT</div>
+                <div class="nama-siswa" id="nama-siswa-header"></div>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <div class="timer-box">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">40:00</span>
+                </div>
+                <button id="daftar-soal-btn" class="btn">Daftar Soal</button>
+            </div>
+        </div>
+        
+        <div class="soal-container">
+            <div class="soal-header">
+                <div class="soal-number" id="soal-number">Soal 1</div>
+                <div class="soal-text" id="soal-text"></div>
+            </div>
+            
+            <div class="options-container" id="options-container">
+                <!-- Options will be generated by JavaScript -->
+            </div>
+            
+            <div class="navigation">
+                <button id="prev-btn" class="btn">Soal Sebelumnya</button>
+                <button id="ragu-btn" class="btn btn-orange">Ragu-Ragu</button>
+                <button id="next-btn" class="btn">Soal Selanjutnya</button>
+                <button id="selesai-btn" class="btn btn-selesai hidden">Selesai</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Daftar Soal -->
+    <div id="daftar-soal-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h3>Daftar Soal</h3>
+                <button class="close-btn" id="close-popup">×</button>
+            </div>
+            <div class="soal-grid" id="soal-grid">
+                <!-- Soal items will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Halaman Hasil Ujian -->
+    <div id="hasil-page" class="hasil-container hidden">
+        <div class="hasil-box">
+            <h2>Hasil Ujian</h2>
+            <div class="info-item">
+                <span>Nama:</span>
+                <span id="hasil-nama"></span>
+            </div>
+            <div class="info-item">
+                <span>Kelas:</span>
+                <span id="hasil-kelas"></span>
+            </div>
+            <div class="nilai" id="nilai-akhir"></div>
+            <div class="pesan" id="pesan-hasil"></div>
+        </div>
+    </div>
+
+    <!-- Halaman Rekap Guru -->
+    <div id="rekap-guru" class="rekap-container hidden">
+        <h2>Rekap Hasil Ujian</h2>
+        
+        <div class="kelas-tabs" id="kelas-tabs">
+            <!-- Kelas tabs will be generated by JavaScript -->
+        </div>
+        
+        <table class="rekap-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Siswa</th>
+                    <th>Nomor Absen</th>
+                    <th>Nilai</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="rekap-tbody">
+                <!-- Rekap data will be generated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Data soal
+        const soalData = [
+            {
+                nomor: 1,
+                pertanyaan: `Perhatikan Hadits berikut !
+???? ????? ?????????? ????? ????? ??????? ??????? ?????? ??????? ???????? ????????? ??????????? ?????? ??????????? ???? ?????? ?????????? ???????? ????????????? ?????? ??? ?????? ?????? ??????? ???????????? ????????? ???????? ???? ?????????? ???????????? ???????? ???? ???????????
+Imam Syaf'i dalam sebuah kitab yang berjudul al-'Umm mengatakan, sesungguhnya * yang disebut dengan iman adalah suatu ucapan, suatu perbuatan dan suatu niat, di mana tidak sempurna salah satunya jika tidak bersamaan dengan yang lain. Sedangkan cabang iman dijelaskan dalam sebuah hadits di bawah ini. Pernyataan di bawah ini yang tidak sesuai dengan isi kandungan hadits tersebut adalah ....`,
+                opsi: [
+                    "Iman itu terdiri dari 77 lebih cabang iman",
+                    "cabang iman yang paling utama adalah ucapan lailaha illallah",
+                    "cabang iman yang paling rendah adalah menyingkirkan apa yang akan menghalangi orang di jalan",
+                    "Malu adalah sebagian dari cabang iman",
+                    "Cabang iman yang paling tinggi adalah melaksanakan solat tepat pada waktunya"
+                ],
+                jawaban: "E"
+            },
+            {
+                nomor: 2,
+                pertanyaan: "Islam memberikan pedoman untuk umatnya agar tidak termasuk golongan orang- orang munafk yang ingkar terhadap janji. Berikut ini ketentuan dalam berjanji yang sesuai dengan syariat Islam yang tidak tepat adalah....",
+                opsi: [
+                    "Sebelum mengucapkan janji, pikirkanlah dahulu dengan matang.",
+                    "Boleh berjanji hanya untuk membuat orang lain merasa senang, meskipun ada niat untuk memenuhinya",
+                    "Berjanji hanya dalam persoalan yang sangat penting dan baik secara syariat Islam.",
+                    "Mengucapkan janji yang disertai dengan kalimat \"insya Allah.\"",
+                    "Menyampaikan permohonan maaf dan alasan yang sebenarnya jika terpaksa tidak bisa memenuhi janji."
+                ],
+                jawaban: "B"
+            },
+            {
+                nomor: 3,
+                pertanyaan: "Janji adalah ucapan seseorang kepada orang lain yang menyatakan kesediaan dan kesanggupan untuk berbuat sesuatu. Memenuhi janji merupakan salah satu sifat terpuji yang diajarkan oleh Nabi Muhammad Saw. Sikap memenuhi janji juga menjadi faktor penting keberhasilan dan kesuksesan seseorang. Hal ini dikarenakan ....",
+                opsi: [
+                    "dengan memenuhi janji tidak akan ada konflik di dunia",
+                    "janji selalu membawa berkah",
+                    "orang yang menepati janji dipercaya dan dihormati",
+                    "janji tidak pernah mempengaruhi reputasi",
+                    "janji selalu diabaikan dalam kesuksesan"
+                ],
+                jawaban: "C"
+            },
+            {
+                nomor: 4,
+                pertanyaan: "Memenuhi janji menjadi faktor penting keberhasilan dan kesuksesan seseorang.Rasulullah merupakan contoh terbaik tentang itu. Berikut ini, keuntungan orang menepati janji, kecuali …",
+                opsi: [
+                    "terus dicari keberadaanya oleh semua orang, karena amanah sekali",
+                    "hidupnya menjadi berkah dan tidak pernah kurang",
+                    "dikembalikan fungsi imannya ke dalam dada manusia",
+                    "jauh dari keresaan dan kebimbangan dalam hidupnya",
+                    "hilang kekhawatiran dan kecemasan di segala situasi"
+                ],
+                jawaban: "A"
+            },
+            {
+                nomor: 5,
+                pertanyaan: "Sebagai seorang pelajar muslim ketika berjanji kepada temannya, Andi selalu mengatakan pasti. Bobi sebagai seorang pelajar yang pandai di kelasnya tidakberani untuk berjanji dengan siapapun. Cici sebagai seorang pelajar yang tidakmengetahui nasib di masa yang akan datang, tatkala berjanji selalu mengatakan insya Allah. Dimas sebagai seorang ketua kelas selalu dengan mudah mengikat janji dengan siapapun, walaupun sering diingkari. Emil sebagai seorang pelajar yang suka bergaul ketika berjanji mudah sekali untuk dilupakan. Berdasarkan contoh perilaku di atas, etika berjanji yang baik dan benar dilakukan oleh ...",
+                opsi: [
+                    "Andi",
+                    "Dimas",
+                    "Bobi",
+                    "Cici",
+                    "Emil"
+                ],
+                jawaban: "C"
+            },
+            {
+                nomor: 6,
+                pertanyaan: "Perhatikan pernyataan-pernyataan berikut.\n1) Janji adalah utang\n2) Memenuhi janji adalah wujud sebagai orang beriman\n3) Memenuhi janji menunjukkan orang yang dapat dipercaya\n4) Memenuhi janji jaminan menjadi kaya raya\n5) Memenuhi janji tanda pahlawan kebenaran\n6) Memenuhi janji merupakan pokok ajaran Islam\nBerdasarkan beberapa pernyataan tersebut yang menunjukkan sebab-sebab seseorang wajib memenuhi janji adalah ....",
+                opsi: [
+                    "1), 2), dan 3)",
+                    "1), 3), dan 4)",
+                    "2), 3), dan 4)",
+                    "3), 4), dan 5)",
+                    "4), 5), dan 6)"
+                ],
+                jawaban: "A"
+            },
+            {
+                nomor: 7,
+                pertanyaan: `Perhatikan ayat berikut !
+?????? ???????? ??? ???????? ??????? ???????? ????????? ???????? ???????? ??? ????????????? ?
+Itulah) janji Allah. Allah tidak akan menyalahi janji-Nya, tetapi kebanyakan manusia tidak mengetahui.
+Allah Swt. memerintahkan manusia supaya menepati janjinya karena menepati janji memiliki banyak sekali manfaat yang akan diterimanya. Berdasarkan ayat tersebut,terdapat salah satu hikmah, kecuali …..`,
+                opsi: [
+                    "telah meneladani sifat Allah Swt. yang tidak pernah mengingkari janji",
+                    "telah menjaga perasaan orang lain yang ia janjikan",
+                    "termasuk orang yang bertakwa",
+                    "terbebas dari tuntutan dunia dan akhirat",
+                    "terhindar dari salah satu sifat munafik"
+                ],
+                jawaban: "A"
+            },
+            {
+                nomor: 8,
+                pertanyaan: "Perhatikan perilaku berikut !\nA. Sebagai umat Islam menggunakan nikmat Allah untuk beribadah.\nB. Setiap menerima nikmat Allah selalu dihabiskan untuk membeli barang-barang yang mahal.\nC. Berusaha berbagi dengan teman-teman sekelas saat menerima nikmat dari Allah Swt\nD. Menerima nikmat Allah dan menyimpan rapat-rapat di bank.\nE. Ketika menerima nikmat Allah, sebagian kecil disedekahkan kepada yang berhak \nBerdasarkan beberapa contoh perilaku tersebut, yang menunjukkan perilaku mensyukuri nikmat Allah Swt. adalah ....",
+                opsi: [
+                    "A), B), dan C",
+                    "A), B), dan D)",
+                    "A), D), dan E)",
+                    "A), C), dan E)",
+                    "A), B), dan E)"
+                ],
+                jawaban: "D"
+            },
+            {
+                nomor: 9,
+                pertanyaan: "Setiap manusia tidak akan terlepas dari nikmat Allah Swt. Bahkan tidak adaseorang pun yang sanggup menghitungnya, karena sangat banyaknya nikmatyang diberikan oleh Allah Swt. kepada manusia. Oleh karena itu, setiap umatmanusia wajib untuk ....",
+                opsi: [
+                    "menghitung nikmat Allah Swt.",
+                    "menyimpan nikmat Allah Swt.",
+                    "menjaga nikmat Allah Swt.",
+                    "mensyukuri nikmat Allah Swt.",
+                    "mengingkari nikmat Allah Swt."
+                ],
+                jawaban: "D"
+            },
+            {
+                nomor: 10,
+                pertanyaan: "Ikrar dalam hati, ucapan dengan lisan, penerapan dalam perilaku yangmenunjukkan terima kasih atas nikmat dan anugerah dari Allah Swt. dalamkehidupan sehari-hari merupakan....",
+                opsi: [
+                    "tata cara bersyukur terhadap nikmat Allah Swt.",
+                    "sebab-sebab bersyukur terhadap nikmat Allah Swt.",
+                    "tujuan bersyukur terhadap nikmat Allah Swt.",
+                    "pengertian bersyukur terhadap nikmat Allah Swt.",
+                    "manfaat bersyukur terhadap nikmat Allah Swt."
+                ],
+                jawaban: "D"
+            },
+            {
+                nomor: 11,
+                pertanyaan: "Perhatikan perilaku berikut.\n1) Berbagi nikmat kepada sesama\n2) Membeli barang-barang baru\n3) Menyisihkan sebagian harta untuk sedekah\n4) Membantu orang yang terdampak wabah Covid-19\n5) Membeli kendaraan baru\n6) Menabung di bank atau secara deposito\nBerdasarkan contoh perilaku tersebut, ciri-ciri perilaku seorang yang bersyukur terhadap nikmat Allah Swt. ditunjukkan oleh nomor …",
+                opsi: [
+                    "1), 2), dan 3)",
+                    "3), 4), dan 5)",
+                    "1), 2), dan 4)",
+                    "1), 3), dan 4)",
+                    "4), 5), dan 6)"
+                ],
+                jawaban: "D"
+            },
+            {
+                nomor: 12,
+                pertanyaan: `Salah satu perintah Allah kepada manusia untuk mensyukuri nikmat Allah Swtadalah QS. Ibrahim: 7 sebagaimana ayat berikut;
+?????? ????????? ????????? ??????? ?????????? ????????????????? ????????? ?????????? ????? ????????? ?????????? ??
+Hikmah yang akan diperoleh bagi orang yang mensyukuri nikmat Allah Swt sesuai ayat tersebut adalah ....`,
+                opsi: [
+                    "Allah akan melipat gandakan nikmat yang telah diberikan kepada hamba-Nya yang mau bersyukur",
+                    "mendapat surga yang penuh dengan kenikmatan",
+                    "dijauhkan dari kemiskinan di dunia dan akhirat",
+                    "meningkatkan keimanan kepada Allah Swt sebagai pemberi nikmat",
+                    "Hidup lebih tenang karena terhindar dari penyakit hati"
+                ],
+                jawaban: "A"
+            },
+            {
+                nomor: 13,
+                pertanyaan: "Perhatikan pernyataan berikut.\n1) Berbicara ketika diperlukan\n2) Berbicara secara panjang dan lebar\n3) Berbicara tentang kebaikan dan kebenaran\n4) Berbicara yang berlebihan\n5) Berbicara sesuai kenyataan yang terjadi\n6) Berbicara sebagai kebebasan hak asasi manusia \nDari beberapa pernyataan tersebut, yang termasuk berbicara sesuai perintah Allah Swt. dan rasul-Nya ditunjukkan oleh nomor ….",
+                opsi: [
+                    "1), 2), dan 3)",
+                    "1), 3), dan 5)",
+                    "2), 3), dan 4)",
+                    "2), 4), dan 5)",
+                    "3), 5), dan 6)"
+                ],
+                jawaban: "B"
+            },
+            {
+                nomor: 14,
+                pertanyaan: "Umat Islam yang baik harus menjaga lisannya. Cara menjaga lisan adalah selalu berhati-hati ketika hendak berbicara. Karena risiko tergelincirnya lisan lebih berbahaya daripada tergelincirnya kaki. Berikut yang tidak termasuk cara untuk menjaga lisan adalah .....",
+                opsi: [
+                    "berpikir terlebih dahulu sebelum berbicara",
+                    "berbicara sesuai kenyataan",
+                    "berbicara dengan bebas tanpa aturan",
+                    "berbicara secara baik dan benar",
+                    "berbicara sesuai ajaran Islam"
+                ],
+                jawaban: "C"
+            },
+            {
+                nomor: 15,
+                pertanyaan: "Perhatikan perilaku berikut.\n1) Bebas untuk berbicara tanpa batas\n2) Digunakan untuk berdakwah\n3) Membuat jera terhadap orang lain\n4) Mengucapkan hal-hal yang positif\n5) Berzikir kepada Allah Swt.\n6) Menghujat seseorang yang tidak beretika\nBerdasarkan beberapa contoh perilaku tersebut, yang merupakan fungsi lisan sesuai ajaran Islam ditunjukkan oleh nomor ....",
+                opsi: [
+                    "1), 2), dan 3)",
+                    "2), 3), dan 4)",
+                    "3), 4), dan 5)",
+                    "4), 5), dan 6)",
+                    " 2), 4), dan 5)"
+                ],
+                jawaban: "E"
+            },
+            {
+                nomor: 16,
+                pertanyaan: `Keselamatan manusia tergantung kepada kemampuannya dalammenjaga lisan sebagaimana sabda Rosulullah berikut;
+??????????? ???? ?????? ??????????????? ???? ????????? ????????
+Itulah sebabnya, Rasulullah Saw. bersabda: Tanda muslim sejati adalah …`,
+                opsi: [
+                    "tersedianya sandang dan pangan",
+                    "keamanan yang melingkupi keluarga",
+                    "memberikan sedekah sekedar kemampuan",
+                    "selamatnya pihak lain dari gangguannya",
+                    "terhindarnya keadaan yang melelahkan"
+                ],
+                jawaban: "D"
+            },
+            {
+                nomor: 17,
+                pertanyaan: `Seorang muslim yang baik adalah yang mampu menjaga lisannya dari perkataan yangmenyakiti saudaranya. oleh karena itu Rosulullah mengajarkan agar kita menjagalisannya. Salah satu cara menjaga lisan sesuai sabda Rosulullah berikut adalah ...
+???? ????? ???????? ????????? ??????????? ???????? ?????????? ??????? ???? ??????????`,
+                opsi: [
+                    "Hindari berbicara tanpa dipikirkan terlebih dahulu dampaknya terhadap orang lain.",
+                    "Berkata santun kepada orang yang lebih tua.",
+                    "Hindari perkataan yang tidak diketahui kebenarannya menjauhi sikap sombong dan membanggakan diri,",
+                    "Hindari perbuatan gibah, bergunjing, atau mengadu domba terhadap orang lain.",
+                    "Lebih baik diam daripada berbicara yang tidak ada manfaatnya."
+                ],
+                jawaban: "E"
+            },
+            {
+                nomor: 18,
+                pertanyaan: "Rasulullah Saw. juga mengingatkan kita, bahwa keselamatanmanusia tergantung pada kemampuannya dalam menjaga lisannya. Oleh karenaitu Rosulullah memberikan petunjuk kepada umat Islam agar berhati-hati dalammenggunakan lisan. Apa pesan yang disampaikan oleh Rasulullah Saw. tentang penggunaan lisan?",
+                opsi: [
+                    "Berbicara tanpa batasan adalah hal yang dianjurkan",
+                    "Berbicara adalah tindakan yang tidak penting dalam kehidupan",
+                    "Hanya berbicara jika dapat memberikan manfaat",
+                    "Berbicara boleh berdasarkan asumsi",
+                    "Berbicara adalah hak setiap individu"
+                ],
+                jawaban: "C"
+            },
+            {
+                nomor: 19,
+                pertanyaan: "Aib berasal dari salah, dosa dan kemaksiatan yang dilakukan. Bertumpuknyadosa sama saja dengan menumpuk aib. Namun, selalu ada waktu untukmemperbaiki. Berikut ini yang diperbolehkan untukmembuka aib seseorang, yaitu ….",
+                opsi: [
+                    "menggunakan bukti-bukti yang handal",
+                    "mengerem keinginan pihak-pihak yang terlibat",
+                    "bertujuan menyelidiki untuk kebaikan masyarakat",
+                    "coba-coba mengusut kasus yang membawa mesteri",
+                    "memperlakukan lembaga yang faham tentang masalah"
+                ],
+                jawaban: "C"
+            },
+            {
+                nomor: 20,
+                pertanyaan: "Saat ini, membuka aib bukan sekedar dari lisan, tetapi melalui jarijari pada mediasosial (medsos) masing-masing. Itu sebabnya, sebagai muslim harus selektif menggunakannya, yaitu ….",
+                opsi: [
+                    "bersumber dari pemerintah",
+                    "benar isinya dan sumbernya jelas",
+                    "isinya mengubah tatanan masyrakat",
+                    "ada dalil yang menguatkan tentang itu",
+                    "susunan kalimatnya sangat bagus dan teratur"
+                ],
+                jawaban: "B"
+            },
+            {
+                nomor: 21,
+                pertanyaan: "Perhatikan pernyataan-pernyataan berikut !\n1) Menjauhkan diri dari sikap mencari-cari kesalahan seseorang\n2) Menyebarkan kejelekan orang lain melalui media sosial\n3) Tidak tertarik untuk mengetahui aib seseorang\n4) Menutupi aib setiap orang secara bertanggung jawab\n5) Membicarakan hal yang negatif tentang orang lain bersama tetangga\n6) Sengaja mempengaruhi orang lain dengan membuka aib seseorang\nBerdasarkan pernyataan tersebut, yang termasuk contoh perilaku menutupi aib seseorang ditunjukkan oleh nomor ...",
+                opsi: [
+                    "1), 2), dan 3)",
+                    "1), 3), dan 4)",
+                    "2), 3), dan 4)",
+                    "3), 4), dan 5)",
+                    "4), 5), dan 6)"
+                ],
+                jawaban: "B"
+            },
+            {
+                nomor: 22,
+                pertanyaan: `Perhatikan lafal hadis berikut !
+Perilaku yang sesuai dengan makna lafal hadis tersebut adalah....
+???? ?????? ????????? ???????? ????? ?????? ????????????  
+"Barangsiapa yang menutupi aib seorang muslim, niscaya Allah akan menutupi aibnya pada hari kiamat kelak"`,
+                opsi: [
+                    "Zidan membicarakan temannya yang mendapatkan nilai jelek saat ulangansekolah",
+                    "Wahid berusaha merahasiakan bahwa ia pernah melihat Deni minum air ketikasedang berpuasa",
+                    "Rendi mencari-cari kelemahan Rudi agar dapat mengalahkannya dalampertandingan sepak bola antarkelas",
+                    "Daus memberikan sebagian makanannya kepada teman sebangkunya",
+                    "Ari berusaha untuk selalu tersenyum ketika bertemu dengan orang lain"
+                ],
+                jawaban: "B"
+            },
+            {
+                nomor: 23,
+                pertanyaan: "Perhatikan perilaku berikut.\nA)Agar kita memiliki kendali atas aib tersebut\nB) Untuk membuat orang lain merasa curiga\nC) Karena aib adalah hal yang positif dalam hidup\nD) Agar kita terlihat lebih baik dari orang lain\nE) Karena aib adalah keburukan yang bersifat rahasia\nBerdasarkan pernyataan di atas, yang merupakan alasan penting untuk menutupi aib orang lain adalah....",
+                opsi: [
+                    "A",
+                    "B",
+                    "C",
+                    "D",
+                    "E"
+                ],
+                jawaban: "E"
+            },
+            {
+                nomor: 24,
+                pertanyaan: "Islam mengajarkan umatnya agar menutup aib orang lain. Dalam hal ini Al Qur'an memberikan perumpamaan bagi seorang yang membuka aib saudaranya dengan cara menggunjingkan kepada orang lain adalah seperti ....",
+                opsi: [
+                    "memakan bangkai mayat saudaranya",
+                    "seseorang yang berjalan mengelilingi dunia tanpa arah tujuan",
+                    "tidak mau menyedekahkan harta kekayaannya",
+                    "mengamalkan seluruh ilmu kepada manusia",
+                    "mengubur bayi hidup-hidup"
+                ],
+                jawaban: "A"
+            },
+            {
+                nomor: 25,
+                pertanyaan: `Agar terhindar dari mengumbar aib orang lain maka ketika menerima informasi kita harus berhati-hati, sebagaimana Firman Allah di bawah ini. 
+??????????? ?????????? ?????????? ???? ?????????? ???????? ???????? ??????????????? ???? ??????????? ??????? ? ??????????? ????????????? ????? ??? ?????????? ?????????? ??
+Wahai orang-orang yang beriman, jika seorang fasik datang kepadamu membawa berita penting, maka telitilah kebenarannya agar kamu tidak mencelakakan suatu kaum karena ketidaktahuan(-mu) yang berakibat kamu menyesali perbuatanmu itu.
+
+Perilaku yang tepat ketika menerima informasi sesuai isi kandungan ayat tersebut adalah ....`,
+                opsi: [
+                    "mencari informasi dari berbagai sumber agar informasi yang disampaikan lengkap dan sempurna",
+                    "langsung percaya terhadap informasi yang didapatkan tanpa melakukan klarifikasi",
+                    "memilah dan melakukan klarifikasi terhadap semua informasi yang didapatkan",
+                    "menganggap semua informasi adalah hoaks",
+                    "menyalahkan informasi yang didapatkan untuk kepentingan pribadi"
+                ],
+                jawaban: "C"
+            }
+        ];
+
+        // Variabel global
+        let currentUser = null;
+        let currentSoalIndex = 0;
+        let jawabanSiswa = {};
+        let soalAcak = [];
+        let timerInterval = null;
+        let waktuTersisa = 40 * 60; // 40 menit dalam detik
+        let siswaSudahLogin = []; // Array untuk menyimpan siswa yang sudah login
+
+        // DOM Elements
+        const loginPage = document.getElementById('login-page');
+        const dashboardSiswa = document.getElementById('dashboard-siswa');
+        const ujianPage = document.getElementById('ujian-page');
+        const hasilPage = document.getElementById('hasil-page');
+        const rekapGuru = document.getElementById('rekap-guru');
+        
+        const siswaBtn = document.getElementById('siswa-btn');
+        const guruBtn = document.getElementById('guru-btn');
+        const loginSiswaForm = document.getElementById('login-siswa-form');
+        const loginGuruForm = document.getElementById('login-guru-form');
+        
+        const mulaiUjianBtn = document.getElementById('mulai-ujian');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const selesaiBtn = document.getElementById('selesai-btn');
+        const raguBtn = document.getElementById('ragu-btn');
+        const daftarSoalBtn = document.getElementById('daftar-soal-btn');
+        const closePopupBtn = document.getElementById('close-popup');
+        const daftarSoalPopup = document.getElementById('daftar-soal-popup');
+        
+        const timerElement = document.getElementById('timer');
+        const soalNumberElement = document.getElementById('soal-number');
+        const soalTextElement = document.getElementById('soal-text');
+        const optionsContainer = document.getElementById('options-container');
+        const soalGrid = document.getElementById('soal-grid');
+        
+        // Event Listeners
+        siswaBtn.addEventListener('click', () => {
+            siswaBtn.classList.add('active');
+            guruBtn.classList.remove('active');
+            loginSiswaForm.classList.remove('hidden');
+            loginGuruForm.classList.add('hidden');
+        });
+        
+        guruBtn.addEventListener('click', () => {
+            guruBtn.classList.add('active');
+            siswaBtn.classList.remove('active');
+            loginGuruForm.classList.remove('hidden');
+            loginSiswaForm.classList.add('hidden');
+        });
+        
+        loginSiswaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nama = document.getElementById('nama-siswa').value;
+            const noAbsen = document.getElementById('no-absen').value;
+            const kelas = document.getElementById('kelas').value;
+            
+            // Cek apakah siswa sudah login
+            if (siswaSudahLogin.some(siswa => siswa.nama === nama)) {
+                alert('Nama ini sudah digunakan untuk login. Silakan gunakan nama lain.');
+                return;
+            }
+            
+            currentUser = {
+                type: 'siswa',
+                nama: nama,
+                noAbsen: noAbsen,
+                kelas: kelas
+            };
+            
+            // Tambahkan siswa ke array siswa yang sudah login
+            siswaSudahLogin.push(currentUser);
+            
+            // Simpan ke localStorage untuk keperluan rekap guru
+            let hasilUjian = JSON.parse(localStorage.getItem('hasilUjian')) || [];
+            hasilUjian.push({
+                nama: nama,
+                noAbsen: noAbsen,
+                kelas: kelas,
+                nilai: null,
+                status: null
+            });
+            localStorage.setItem('hasilUjian', JSON.stringify(hasilUjian));
+            
+            // Tampilkan dashboard siswa
+            tampilkanDashboardSiswa();
+        });
+        
+        loginGuruForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username-guru').value;
+            const password = document.getElementById('password-guru').value;
+            
+            if (username === 'solihan' && password === '1984') {
+                currentUser = {
+                    type: 'guru',
+                    username: username
+                };
+                
+                // Tampilkan halaman rekap guru
+                tampilkanRekapGuru();
+            } else {
+                alert('Username atau password salah!');
+            }
+        });
+        
+        mulaiUjianBtn.addEventListener('click', () => {
+            // Acak urutan soal
+            soalAcak = [...soalData];
+            for (let i = soalAcak.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [soalAcak[i], soalAcak[j]] = [soalAcak[j], soalAcak[i]];
+            }
+            
+            // Reset jawaban siswa
+            jawabanSiswa = {};
+            currentSoalIndex = 0;
+            waktuTersisa = 40 * 60;
+            
+            // Tampilkan halaman ujian
+            tampilkanHalamanUjian();
+            
+            // Mulai timer
+            mulaiTimer();
+            
+            // Generate daftar soal
+            generateDaftarSoal();
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentSoalIndex > 0) {
+                currentSoalIndex--;
+                tampilkanSoal();
+                updateDaftarSoal();
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentSoalIndex < soalAcak.length - 1) {
+                currentSoalIndex++;
+                tampilkanSoal();
+                updateDaftarSoal();
+            }
+        });
+        
+        selesaiBtn.addEventListener('click', () => {
+            // Konfirmasi sebelum menyelesaikan ujian
+            if (confirm('Apakah Anda yakin ingin menyelesaikan ujian?')) {
+                selesaiUjian();
+            }
+        });
+        
+        raguBtn.addEventListener('click', () => {
+            // Tandai soal sebagai ragu-ragu
+            const soalId = soalAcak[currentSoalIndex].nomor;
+            if (!jawabanSiswa[soalId]) {
+                jawabanSiswa[soalId] = {
+                    jawaban: null,
+                    ragu: true
+                };
+            } else {
+                jawabanSiswa[soalId].ragu = !jawabanSiswa[soalId].ragu;
+            }
+            
+            // Update tampilan daftar soal
+            updateDaftarSoal();
+            
+            // Beri feedback visual
+            raguBtn.style.backgroundColor = jawabanSiswa[soalId]?.ragu ? '#e67300' : '#FF8C00';
+        });
+        
+        daftarSoalBtn.addEventListener('click', () => {
+            daftarSoalPopup.style.display = 'flex';
+            updateDaftarSoal();
+        });
+        
+        closePopupBtn.addEventListener('click', () => {
+            daftarSoalPopup.style.display = 'none';
+        });
+        
+        // Fungsi untuk menampilkan dashboard siswa
+        function tampilkanDashboardSiswa() {
+            loginPage.classList.add('hidden');
+            dashboardSiswa.classList.remove('hidden');
+            
+            document.getElementById('info-nama').textContent = currentUser.nama;
+            document.getElementById('info-absen').textContent = currentUser.noAbsen;
+            document.getElementById('info-kelas').textContent = currentUser.kelas;
+        }
+        
+        // Fungsi untuk menampilkan halaman ujian
+        function tampilkanHalamanUjian() {
+            dashboardSiswa.classList.add('hidden');
+            ujianPage.classList.remove('hidden');
+            
+            document.getElementById('nama-siswa-header').textContent = currentUser.nama;
+            
+            tampilkanSoal();
+        }
+        
+        // Fungsi untuk menampilkan soal
+        function tampilkanSoal() {
+            const soal = soalAcak[currentSoalIndex];
+            soalNumberElement.textContent = `Soal ${currentSoalIndex + 1}`;
+            soalTextElement.textContent = soal.pertanyaan;
+            
+            // Kosongkan container opsi
+            optionsContainer.innerHTML = '';
+            
+            // Buat opsi
+            soal.opsi.forEach((opsi, index) => {
+                const opsiElement = document.createElement('div');
+                opsiElement.className = 'option-item';
+                opsiElement.dataset.index = index;
+                
+                const radioElement = document.createElement('div');
+                radioElement.className = 'option-radio';
+                
+                const labelElement = document.createElement('span');
+                labelElement.textContent = `${String.fromCharCode(65 + index)}. ${opsi}`;
+                
+                opsiElement.appendChild(radioElement);
+                opsiElement.appendChild(labelElement);
+                
+                // Cek jika opsi ini dipilih
+                const soalId = soal.nomor;
+                if (jawabanSiswa[soalId] && jawabanSiswa[soalId].jawaban === index) {
+                    radioElement.classList.add('selected');
+                }
+                
+                opsiElement.addEventListener('click', () => {
+                    // Hapus selected dari semua opsi
+                    document.querySelectorAll('.option-radio').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                    
+                    // Tambahkan selected ke opsi yang diklik
+                    radioElement.classList.add('selected');
+                    
+                    // Simpan jawaban
+                    if (!jawabanSiswa[soalId]) {
+                        jawabanSiswa[soalId] = {
+                            jawaban: index,
+                            ragu: false
+                        };
+                    } else {
+                        jawabanSiswa[soalId].jawaban = index;
+                    }
+                    
+                    // Update daftar soal
+                    updateDaftarSoal();
+                });
+                
+                optionsContainer.appendChild(opsiElement);
+            });
+            
+            // Update tombol navigasi
+            prevBtn.disabled = currentSoalIndex === 0;
+            
+            // Tampilkan tombol Selesai di soal terakhir
+            if (currentSoalIndex === soalAcak.length - 1) {
+                nextBtn.classList.add('hidden');
+                selesaiBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                selesaiBtn.classList.add('hidden');
+            }
+            
+            // Update tombol ragu
+            const soalId = soal.nomor;
+            if (jawabanSiswa[soalId] && jawabanSiswa[soalId].ragu) {
+                raguBtn.style.backgroundColor = '#e67300';
+            } else {
+                raguBtn.style.backgroundColor = '#FF8C00';
+            }
+        }
+        
+        // Fungsi untuk generate daftar soal
+        function generateDaftarSoal() {
+            soalGrid.innerHTML = '';
+            
+            soalAcak.forEach((soal, index) => {
+                const soalItem = document.createElement('div');
+                soalItem.className = 'soal-item';
+                soalItem.textContent = index + 1;
+                soalItem.dataset.index = index;
+                
+                soalItem.addEventListener('click', () => {
+                    currentSoalIndex = index;
+                    tampilkanSoal();
+                    updateDaftarSoal();
+                    daftarSoalPopup.style.display = 'none';
+                });
+                
+                soalGrid.appendChild(soalItem);
+            });
+        }
+        
+        // Fungsi untuk update daftar soal
+        function updateDaftarSoal() {
+            const soalItems = document.querySelectorAll('.soal-item');
+            
+            soalItems.forEach((item, index) => {
+                const soal = soalAcak[index];
+                const soalId = soal.nomor;
+                
+                // Reset class
+                item.classList.remove('current', 'answered');
+                
+                // Tandai soal saat ini
+                if (index === currentSoalIndex) {
+                    item.classList.add('current');
+                }
+                
+                // Tandai soal yang sudah dijawab
+                if (jawabanSiswa[soalId] && jawabanSiswa[soalId].jawaban !== null) {
+                    item.classList.add('answered');
+                }
+            });
+        }
+        
+        // Fungsi untuk memulai timer
+        function mulaiTimer() {
+            // Hentikan timer yang sudah ada
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // Update tampilan timer
+            updateTimerDisplay();
+            
+            // Set interval untuk update timer setiap detik
+            timerInterval = setInterval(() => {
+                waktuTersisa--;
+                updateTimerDisplay();
+                
+                // Cek jika waktu habis
+                if (waktuTersisa <= 0) {
+                    clearInterval(timerInterval);
+                    selesaiUjian();
+                }
+            }, 1000);
+        }
+        
+        // Fungsi untuk update tampilan timer
+        function updateTimerDisplay() {
+            const menit = Math.floor(waktuTersisa / 60);
+            const detik = waktuTersisa % 60;
+            timerElement.textContent = `${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
+        }
+        
+        // Fungsi untuk menyelesaikan ujian
+        function selesaiUjian() {
+            // Hentikan timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // Hitung nilai
+            let nilai = 0;
+            let benar = 0;
+            
+            soalAcak.forEach(soal => {
+                const soalId = soal.nomor;
+                if (jawabanSiswa[soalId] && jawabanSiswa[soalId].jawaban !== null) {
+                    const jawabanIndex = jawabanSiswa[soalId].jawaban;
+                    const jawabanBenar = soal.jawaban.charCodeAt(0) - 65; // A=0, B=1, dst
+                    
+                    if (jawabanIndex === jawabanBenar) {
+                        benar++;
+                    }
+                }
+            });
+            
+            nilai = benar * 20; // Setiap soal bernilai 20
+            
+            // Simpan hasil ujian
+            let hasilUjian = JSON.parse(localStorage.getItem('hasilUjian')) || [];
+            const index = hasilUjian.findIndex(item => 
+                item.nama === currentUser.nama && 
+                item.noAbsen === currentUser.noAbsen && 
+                item.kelas === currentUser.kelas
+            );
+            
+            if (index !== -1) {
+                hasilUjian[index].nilai = nilai;
+                hasilUjian[index].status = nilai >= 80 ? 'tuntas' : 'tidak tuntas';
+                localStorage.setItem('hasilUjian', JSON.stringify(hasilUjian));
+            }
+            
+            // Tampilkan halaman hasil
+            tampilkanHalamanHasil(nilai);
+        }
+        
+        // Fungsi untuk menampilkan halaman hasil
+        function tampilkanHalamanHasil(nilai) {
+            ujianPage.classList.add('hidden');
+            hasilPage.classList.remove('hidden');
+            
+            document.getElementById('hasil-nama').textContent = currentUser.nama;
+            document.getElementById('hasil-kelas').textContent = currentUser.kelas;
+            
+            const nilaiElement = document.getElementById('nilai-akhir');
+            const pesanElement = document.getElementById('pesan-hasil');
+            
+            nilaiElement.textContent = nilai;
+            
+            if (nilai >= 80) {
+                nilaiElement.classList.add('lulus');
+                nilaiElement.classList.remove('tidak-lulus');
+                pesanElement.textContent = 'Selamat anda tuntas';
+                pesanElement.classList.add('lulus');
+                pesanElement.classList.remove('tidak-lulus');
+            } else {
+                nilaiElement.classList.add('tidak-lulus');
+                nilaiElement.classList.remove('lulus');
+                pesanElement.textContent = 'maaf kamu harus remidi';
+                pesanElement.classList.add('tidak-lulus');
+                pesanElement.classList.remove('lulus');
+            }
+        }
+        
+        // Fungsi untuk menampilkan halaman rekap guru
+        function tampilkanRekapGuru() {
+            loginPage.classList.add('hidden');
+            rekapGuru.classList.remove('hidden');
+            
+            // Generate kelas tabs
+            generateKelasTabs();
+            
+            // Tampilkan data untuk kelas pertama
+            tampilkanRekapKelas('XI-1');
+        }
+        
+        // Fungsi untuk generate kelas tabs
+        function generateKelasTabs() {
+            const kelasTabs = document.getElementById('kelas-tabs');
+            kelasTabs.innerHTML = '';
+            
+            for (let i = 1; i <= 12; i++) {
+                const kelas = `XI-${i}`;
+                const tab = document.createElement('button');
+                tab.className = 'kelas-tab';
+                tab.textContent = kelas;
+                tab.dataset.kelas = kelas;
+                
+                if (i === 1) {
+                    tab.classList.add('active');
+                }
+                
+                tab.addEventListener('click', () => {
+                    // Hapus active dari semua tabs
+                    document.querySelectorAll('.kelas-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    
+                    // Tambahkan active ke tab yang diklik
+                    tab.classList.add('active');
+                    
+                    // Tampilkan data untuk kelas yang dipilih
+                    tampilkanRekapKelas(kelas);
+                });
+                
+                kelasTabs.appendChild(tab);
+            }
+        }
+        
+        // Fungsi untuk menampilkan rekap per kelas
+        function tampilkanRekapKelas(kelas) {
+            const tbody = document.getElementById('rekap-tbody');
+            tbody.innerHTML = '';
+            
+            // Ambil data hasil ujian dari localStorage
+            let hasilUjian = JSON.parse(localStorage.getItem('hasilUjian')) || [];
+            
+            // Filter data untuk kelas yang dipilih dan yang sudah memiliki nilai
+            let dataKelas = hasilUjian.filter(item => item.kelas === kelas && item.nilai !== null);
+            
+            // Urutkan berdasarkan nomor absen
+            dataKelas.sort((a, b) => parseInt(a.noAbsen) - parseInt(b.noAbsen));
+            
+            // Tampilkan data
+            dataKelas.forEach((item, index) => {
+                const row = document.createElement('tr');
+                
+                const noCell = document.createElement('td');
+                noCell.textContent = index + 1;
+                
+                const namaCell = document.createElement('td');
+                namaCell.textContent = item.nama;
+                
+                const absenCell = document.createElement('td');
+                absenCell.textContent = item.noAbsen;
+                
+                const nilaiCell = document.createElement('td');
+                nilaiCell.textContent = item.nilai;
+                
+                const statusCell = document.createElement('td');
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `status ${item.status}`;
+                statusDiv.textContent = item.status === 'tuntas' ? 'Tuntas' : 'Tidak Tuntas';
+                statusCell.appendChild(statusDiv);
+                
+                row.appendChild(noCell);
+                row.appendChild(namaCell);
+                row.appendChild(absenCell);
+                row.appendChild(nilaiCell);
+                row.appendChild(statusCell);
+                
+                tbody.appendChild(row);
+            });
+            
+            // Jika tidak ada data
+            if (dataKelas.length === 0) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.colSpan = 5;
+                cell.textContent = 'Belum ada data ujian untuk kelas ini';
+                cell.style.textAlign = 'center';
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            }
+        }
+    </script>
+
+</body></html>
